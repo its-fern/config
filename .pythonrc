@@ -1,0 +1,3 @@
+# Setup auto complete for python REPL
+import rlcompleter, readline
+readline.parse_and_bind('tab:complete')

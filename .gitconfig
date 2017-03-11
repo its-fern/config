@@ -1,0 +1,107 @@
+# Fernando Ramirez - .gitconfig
+# Updated 06/21/2016
+
+[hub]
+  protocol = https
+
+[color]
+  ui = auto
+  interactive = auto
+
+[color "branch"]
+  current = yellow bold
+  local = green bold
+  remote = cyan bold
+
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+
+[color "status"]
+  added = green bold
+  changed = yellow bold
+  untracked = red bold
+
+[alias]
+  ## Status
+  # Pretty format the log as a tree
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+
+  # Show changes introduced in the last merge
+  last-merge = "!echo $(git log -1 --merges --pretty=format:%P | cut -d' ' -f1)..$(git log -1 --merges --pretty=format:%P | cut -d' ' -f2)"
+  s = status
+
+  ## Branching
+  b = branch
+  o = checkout
+  ob = checkout -b
+
+  # Get the current branch name
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+
+  ## Staging/Unstaging files
+  a = add
+  aa = add -A
+  au = add -u
+
+  # Unstage any files that have been added to the staging area
+  unstage = reset HEAD
+
+  # Show changes that have been staged
+  diffc = diff --cached
+
+  ## Committing
+  c = commit
+  ca = commit -a -m
+  cm = commit -m
+  mn = merge --no-ff
+  fomm = fetch origin master:master
+
+  # Tools
+  dt = difftool
+  mt = mergetool
+
+  # Push a new branch to origin
+  pn = "!git rev-parse --abbrev-ref HEAD | xargs -n 1 git  push --set-upstream origin"
+
+  ## Cleaning
+  ga = gc --aggressive
+  prune-local = remote prune origin
+  delete-merged-branches = "!git o master && git b --merged | grep -v '\\*' | xargs -n 1 git b -d"
+  cleanup = "!git delete-merged-branches && git prune-local && git gc --auto --aggressive"
+
+[apply]
+  whitespace = nowarn
+
+[mergetool]
+  keepBackup = false
+
+[diff]
+	tool = bc3
+
+[help]
+  autocorrect = 1
+
+[core]
+	excludesfile = ~/.gitignore_global
+  autocrlf = input
+
+[push]
+  default = simple
+
+[http]
+  cookiefile = ~/.gitcookies
+
+[credential]
+  helper = osxkeychain
+
+[pull]
+	rebase = true
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true

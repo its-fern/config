@@ -1,0 +1,15 @@
+// Place your settings in this file to overwrite the default settings
+{
+  "files.trimTrailingWhitespace": true,
+
+  "terminal.external.osxExec": "iTerm.app",
+
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  "editor.stablePeek": true,
+  "editor.wrappingIndent": "indent",
+  "editor.minimap.enabled": true,
+  "editor.wordWrap": "off",
+  "editor.minimap.renderCharacters": false,
+  "window.zoomLevel": 0
+}

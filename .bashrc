@@ -40,12 +40,35 @@ fi
 
 export PGSSLMODE="prefer"
 
+# Drop local postgres test and development databases and resync with prod follower snapshots
+dbresync() {
+    echo "Resyncing local development and test databases with follower instances..."
+    FILENAME=$1
+    RAILS_ENV=development bundle exec rake db:drop db:create db:structure:load
+    pg_restore -vcOx -h localhost -d $2 -j $(sysctl -n hw.ncpu) $FILENAME
+    RAILS_ENV=development bundle exec rake db:migrate
+    bundle exec rake db:test:prepare
+    rm $FILENAME
+}
+
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
+
+export -f dbresync
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
 export PYTHONSTARTUP=~/.pythonrc
-export HOMEBREW_GITHUB_API_TOKEN=<FILL_IN>
+export HOMEBREW_GITHUB_API_TOKEN= <>
+
+# For GOBA https://github.com/blueapron/goba
+export GITHUB_API_TOKEN= <>
+
+export EDITOR='code'
+export BUNDLE_ENTERPRISE__CONTRIBSYS__COM= <>
+export GEMFURY_TOKEN= <>
+
+# For CLS
+export CONTRIBSYS_TOKEN= <>

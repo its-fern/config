@@ -9,13 +9,18 @@ alias less="less -R "
 
 alias ..="cd .."
 alias r='rails'
+alias h='heroku'
 
-alias rcts='rails console test --sandbox'
-alias rct='rails console test'
+alias ber_local='bundle exec rails s'
 
-alias rcds='rails console development --sandbox'
-alias rcd='rails console development'
+alias rcts='bundle exec rails console test --sandbox'
+alias rct='bundle exec rails console test'
+
+alias rcds='bundle exec rails console development --sandbox'
+alias rcd='bundle exec rails console development'
 
 alias bers='bundle exec rspec'
 
-alias fix='stty sane'
+alias fix='stty sane' # Fixes broken terminal
+alias fix_dock='killall Dock' # Fixes dock (when gestures don't work)
+alias fix_defaults='find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed -r \;' # Fixes when you can't set program defaults

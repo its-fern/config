@@ -34,6 +34,12 @@
   last-merge = "!echo $(git log -1 --merges --pretty=format:%P | cut -d' ' -f1)..$(git log -1 --merges --pretty=format:%P | cut -d' ' -f2)"
   s = status
 
+  br = for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='(%(color:green)%(committerdate:relative)%(color:reset)) %(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(authorname)'
+
+  fixup = rebase -i HEAD~2
+
+  pf = push --force-with-lease
+
   ## Branching
   b = branch
   o = checkout
@@ -80,14 +86,15 @@
   keepBackup = false
 
 [diff]
-	tool = bc3
+  tool = bc3
 
 [help]
   autocorrect = 1
 
 [core]
-	excludesfile = ~/.gitignore_global
-  autocrlf = input
+  excludesfile = ~/.gitignore_global
+  # autocrlf = input
+  editor = vim
 
 [push]
   default = simple
@@ -101,7 +108,19 @@
 [pull]
 	rebase = true
 
+[difftool "bc3"]
+  cmd = bcomp \"$LOCAL\" \"$REMOTE\"
+  path =
+  trustExitCode = true
+  prompt = false
+
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+[difftool]
+  prompt = false
+[merge]
+  tool = bc3
+[mergetool "bc3"]
+  trustExitCode = true

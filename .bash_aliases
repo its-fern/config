@@ -11,7 +11,7 @@ alias ..="cd .."
 alias r='rails'
 alias h='heroku'
 
-alias ber_local='bundle exec rails s'
+alias ber='bundle exec rails'
 
 alias rcts='bundle exec rails console test --sandbox'
 alias rct='bundle exec rails console test'
@@ -24,3 +24,5 @@ alias bers='bundle exec rspec'
 alias fix='stty sane' # Fixes broken terminal
 alias fix_dock='killall Dock' # Fixes dock (when gestures don't work)
 alias fix_defaults='find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed -r \;' # Fixes when you can't set program defaults
+
+alias dos2unix="sed -e 's/\r$//'"

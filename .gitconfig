@@ -106,7 +106,7 @@
   helper = osxkeychain
 
 [pull]
-	rebase = true
+  rebase = true
 
 [difftool "bc3"]
   cmd = bcomp \"$LOCAL\" \"$REMOTE\"

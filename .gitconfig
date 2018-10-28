@@ -1,5 +1,5 @@
 # Fernando Ramirez - .gitconfig
-# Updated 06/21/2016
+# Updated 10/28/2018
 
 [hub]
   protocol = https
@@ -93,11 +93,11 @@
 
 [core]
   excludesfile = ~/.gitignore_global
-  # autocrlf = input
+  autocrlf = input
   editor = vim
 
 [push]
-  default = simple
+  default = current
 
 [http]
   cookiefile = ~/.gitcookies
@@ -118,9 +118,12 @@
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
   required = true
+
 [difftool]
   prompt = false
+
 [merge]
   tool = bc3
+
 [mergetool "bc3"]
   trustExitCode = true

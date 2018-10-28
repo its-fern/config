@@ -1,0 +1,43 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
+Layout/AlignHash:
+  Enabled: false
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+# Allow DSL-style method calls w/ aligned arguments. The example below would
+# fail this linter because of the `has_many` line:
+# class Thing < ActiveRecord::Base
+#   belongs_to :stuff
+#   has_many   :items
+# end
+Layout/SpaceBeforeFirstArg:
+  Enabled: false
+
+Lint/Debugger:
+  Enabled: true
+  Severity: error
+
+Lint/EnsureReturn:
+  Enabled: true
+  Severity: error
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 14
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
+Style/Documentation:
+  Enabled: false

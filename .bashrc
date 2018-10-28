@@ -40,15 +40,38 @@ fi
 
 export PGSSLMODE="prefer"
 
-# Drop local postgres test and development databases and resync with prod follower snapshots
+# Drop local postgres test and development databases and resync
 dbresync() {
-    echo "Resyncing local development and test databases with follower instances..."
+    echo "Resyncing local development and test databases..."
+
     FILENAME=$1
+    DATABASE_NAME=$2
+
+    if [ ! -f $FILENAME ]; then
+      echo "Database snapshot file not found!"
+      return
+    fi
+
+    # Check if the database exists (https://stackoverflow.com/a/16783253)
+    if [ ! psql -lqt | cut -d \| -f 1 | grep -qw $DATABASE_NAME ]; then
+        echo "Database ${DATABASE_NAME} exists, dropping..."
+    else
+        echo "Database does not exist"
+        return
+    fi
+
+    echo "Dropping development database"
     RAILS_ENV=development bundle exec rake db:drop db:create db:structure:load
-    pg_restore -vcOx -h localhost -d $2 -j $(sysctl -n hw.ncpu) $FILENAME
+
+    echo "Restoring database from snapshot"
+    pg_restore -vcOx -h localhost -d $DATABASE_NAME -j $(sysctl -n hw.ncpu) $FILENAME
+
+    echo "Running any missed migrations"
     RAILS_ENV=development bundle exec rake db:migrate
+
+    echo "Preparing test database"
     bundle exec rake db:test:prepare
-    rm $FILENAME
+    # rm $FILENAME
 }
 
 if [ -f ~/.git-completion.bash ]; then

@@ -93,5 +93,5 @@ export EDITOR='code'
 export BUNDLE_ENTERPRISE__CONTRIBSYS__COM= <>
 export GEMFURY_TOKEN= <>
 
-# For CLS
-export CONTRIBSYS_TOKEN= <>
+# Specify data folder fot the databases (maybe necessary)
+# export PGDATA='/usr/local/var/postgres/'

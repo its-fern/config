@@ -13,11 +13,11 @@ alias h='heroku'
 
 alias ber='bundle exec rails'
 
-alias rcts='bundle exec rails console test --sandbox'
-alias rct='bundle exec rails console test'
+alias rcts='ber console test --sandbox'
+alias rct='ber console test'
 
-alias rcds='bundle exec rails console development --sandbox'
-alias rcd='bundle exec rails console development'
+alias rcds='ber console development --sandbox'
+alias rcd='ber console development'
 
 alias bers='bundle exec rspec'
 

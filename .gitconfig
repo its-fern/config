@@ -36,7 +36,7 @@
 
   br = for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='(%(color:green)%(committerdate:relative)%(color:reset)) %(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(authorname)'
 
-  fixup = commit --amend
+  fixup = commit --amend --no-edit
 
   pf = push --force-with-lease
 

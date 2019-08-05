@@ -1,17 +1,30 @@
-
-# ~/.bashrc: executed by bash(1) for interactive shells.
-
-# User dependent .bashrc file
+#!/usr/bin/env bash
 
 if [ -d "$HOME/bin" ] ; then
   PATH="$PATH:$HOME/bin"
 fi
 
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h: \[\e[33m\]\W\[\e[0m\]\$(parse_git_branch)\n\$ "
+# Python virtualenv helper
+virtualenv_info(){
+  # Get Virtual Env
+  if [[ -n "$VIRTUAL_ENV" ]]; then
+    # Strip out the path and just leave the env name
+    venv="${VIRTUAL_ENV##*/}"
+  else
+    # In case you don't have one activated
+    venv=''
+  fi
+  [[ -n "$venv" ]] && echo "(venv:$venv) "
+}
+
+# disable the default virtualenv prompt change
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h: \[\e[33m\]\W\[\e[0m\]\$(parse_git_branch) \$(virtualenv_info)\n\$ "
 
 # HOME="HOME"; export VARNAME
 
@@ -20,12 +33,12 @@ PS1="\[\e]0;\w\a\]\n\[\e[32m\]\u@\h: \[\e[33m\]\W\[\e[0m\]\$(parse_git_branch)\n
 
 # Uncomment to turn on programmable completion enhancements.
 # Any completions you add in ~/.bash_completion are sourced last.
-# [[ -f /etc/bash_completion ]] && . /etc/bash_completion
+[[ -f /etc/bash_completion ]] && . /etc/bash_completion
 
 # History Options
 #
 # Don't put duplicate lines in the history.
-export HISTCONTROL=$HISTCONTROL${HISTCONTROL+,}ignoredups
+export HISTCONTROL=ignoredups
 export HISTSIZE=100000                   # big big history
 export HISTFILESIZE=100000               # big big history
 shopt -s histappend                      # append to history, don't overwrite it
@@ -38,60 +51,27 @@ if [ -f "${HOME}/.bash_aliases" ]; then
   source "${HOME}/.bash_aliases"
 fi
 
-export PGSSLMODE="prefer"
-
-# Drop local postgres test and development databases and resync
-dbresync() {
-    echo "Resyncing local development and test databases..."
-
-    FILENAME=$1
-    DATABASE_NAME=$2
-
-    if [ ! -f $FILENAME ]; then
-      echo "Database snapshot file not found!"
-      return
-    fi
-
-    # Check if the database exists (https://stackoverflow.com/a/16783253)
-    if [ ! psql -lqt | cut -d \| -f 1 | grep -qw $DATABASE_NAME ]; then
-        echo "Database ${DATABASE_NAME} exists, dropping..."
-    else
-        echo "Database does not exist"
-        return
-    fi
-
-    echo "Dropping development database"
-    RAILS_ENV=development bundle exec rake db:drop db:create db:structure:load
-
-    echo "Restoring database from snapshot"
-    pg_restore -vcOx -h localhost -d $DATABASE_NAME -j $(sysctl -n hw.ncpu) $FILENAME
-
-    echo "Running any missed migrations"
-    RAILS_ENV=development bundle exec rake db:migrate
-
-    echo "Preparing test database"
-    bundle exec rake db:test:prepare
-    # rm $FILENAME
-}
-
 if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
+  source "${HOME}/.git-completion.bash"
 fi
 
-export -f dbresync
+psl() {
+  psql "$LOCAL_DATABASE_URL"
+}
 
 export CLICOLOR=1
 export LSCOLORS=ExFxBxDxCxegedabagacad
 
 export PYTHONSTARTUP=~/.pythonrc
-export HOMEBREW_GITHUB_API_TOKEN= <>
-
-# For GOBA https://github.com/blueapron/goba
-export GITHUB_API_TOKEN= <>
+export HOMEBREW_GITHUB_API_TOKEN=''
 
 export EDITOR='code'
-export BUNDLE_ENTERPRISE__CONTRIBSYS__COM= <>
-export GEMFURY_TOKEN= <>
 
 # Specify data folder fot the databases (maybe necessary)
-# export PGDATA='/usr/local/var/postgres/'
+# export PGDATA='/usr/local/var/postgresql@9.6/'
+export PGSSLMODE="prefer"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+# export LOCAL_DATABASE_URL=postgres://postgres:postgres@localhost:5432/postgres

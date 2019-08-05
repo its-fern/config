@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # alias ls='ls --color=auto -F'
 # alias grep='grep --color=auto'
 # alias fgrep='fgrep --color=auto'
@@ -26,3 +28,5 @@ alias fix_dock='killall Dock' # Fixes dock (when gestures don't work)
 alias fix_defaults='find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed -r \;' # Fixes when you can't set program defaults
 
 alias dos2unix="sed -e 's/\r$//'"
+
+alias dc='docker-compose'

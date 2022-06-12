@@ -1,5 +1,4 @@
 # Fernando Ramirez - .gitconfig
-# Updated 10/28/2018
 
 [hub]
   protocol = https
@@ -85,9 +84,6 @@
 [mergetool]
   keepBackup = false
 
-[diff]
-  tool = bc3
-
 [help]
   autocorrect = 1
 
@@ -108,12 +104,6 @@
 [pull]
   rebase = true
 
-[difftool "bc3"]
-  cmd = bcomp \"$LOCAL\" \"$REMOTE\"
-  path =
-  trustExitCode = true
-  prompt = false
-
 [filter "lfs"]
   clean = git-lfs clean %f
   smudge = git-lfs smudge %f
@@ -122,8 +112,9 @@
 [difftool]
   prompt = false
 
-[merge]
-  tool = bc3
+[user]
+  email = feddo.rami@gmail.com
+  name = Fernando Ramirez
 
-[mergetool "bc3"]
-  trustExitCode = true
+[merge]
+  tool = code

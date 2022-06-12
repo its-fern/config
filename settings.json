@@ -65,7 +65,5 @@
 
   "explorer.confirmDragAndDrop": false,
 
-  "breadcrumbs.enabled": true,
-
-  "terminal.external.osxExec": "iTerm.app"
+  "breadcrumbs.enabled": true
 }

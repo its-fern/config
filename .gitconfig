@@ -63,7 +63,7 @@
   ca = commit -a -m
   cm = commit -m
   mn = merge --no-ff
-  fomm = fetch origin master:master
+  fomm = fetch origin main:main
 
   # Tools
   dt = difftool
@@ -75,7 +75,7 @@
   ## Cleaning
   ga = gc --aggressive
   prune-local = remote prune origin
-  delete-merged-branches = "!git o master && git b --merged | grep -v '\\*' | xargs -n 1 git b -d"
+  delete-merged-branches = "!git o main && git b --merged | grep -v '\\*' | xargs -n 1 git b -d"
   cleanup = "!git delete-merged-branches && git prune-local && git gc --auto --aggressive"
 
 [apply]
@@ -91,6 +91,7 @@
   excludesfile = ~/.gitignore_global
   autocrlf = input
   editor = vim
+  ignorecase = false
 
 [push]
   default = current
@@ -111,10 +112,6 @@
 
 [difftool]
   prompt = false
-
-[user]
-  email = feddo.rami@gmail.com
-  name = Fernando Ramirez
 
 [merge]
   tool = code

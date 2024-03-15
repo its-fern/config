@@ -10,7 +10,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="clean"
 
+eval "$(rbenv init - zsh)"
 eval "$(nodenv init - zsh)"
+eval "$(pyenv init - zsh)"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -62,7 +64,7 @@ eval "$(nodenv init - zsh)"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -101,6 +103,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias r='rails'
+alias ber='bundle exec rails'
+alias bers='bundle exec rspec'
+alias fix='stty sane' # Fixes broken terminal
+alias fix_dock='killall Dock' # Fixes dock (when gestures don't work)
+alias fix_defaults='find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed -r \;' # Fixes when you can't set program defaults
 
 # History environment variables
 HISTFILE=${HOME}/.zsh_history
@@ -121,7 +129,7 @@ setopt SHARE_HISTORY        # Constantly share history between shell instances
 WORDCHARS=${WORDCHARS/\/}
 
 # backward-kill-word deletes back until the last word
-bindkey '^[^?' backward-kill-word
+# bindkey '^[^?' backward-kill-word
 
 HOMEBREW_PREFIX=$(brew --prefix)
 
@@ -158,3 +166,9 @@ zinit wait lucid for \
     OMZP::rbenv \
     OMZP::ruby
 #    OMZP::macos \ # This seems to error out with some missing files for spotify and apple music?
+
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+
+# Set editor for editing files
+export EDITOR="code --wait"
